@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List!</title>
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/23aa65947d.js" crossorigin="anonymous"></script>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300&family=Josefin+Sans:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="backdrop"></div>
+
+    <div class="main-header">
+        <h1 id="main-title">TO DO LIST</h1>
+        <div>
+            <button id="add-task" class="btn">ADD TASK</button>
+            <button id="delete-all" class="btn">DELETE ALL</button>
+        </div>
+    </div>
+    
+    
+    <section id="elements">
+        <!-- <div class="element">
+            <div class="element-body">
+                <div class="element-head">
+                    <h3 class="element-heading">Name of the Task</h3>
+                    <h4 class="element-date">11/03/22</h4>
+                </div>
+                <div class="element-desc">
+                    Here you can add your small description of your task!
+                </div>
+            </div>
+            
+            <div class="element-buttons">
+                <button class="element-btn check"><i class="fa-solid fa-check"></i></button>
+                <button class="element-btn uncheck"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div> -->
+    </section>
+
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <label for="task-name">Task Name</label>
+            <input type="text" id="task-name">
+            <label for="task-deadline">Task Deadline</label>
+            <input type="date" name="" id="task-deadline">
+            <label for="task-description">Task Description</label>
+            <input type="text" id="task-desc">
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-button confirm">ADD TASK</button>
+            <button class="modal-button cancel">CANCEL</button>
+        </div>
+    </div>
+
+    <div id="delete-all-modal" class="modal">
+        <div class="modal-content">
+            <h3>Are You Sure You Want To Delete All Your Tasks?</h3>
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-button confirm">YES</button>
+            <button class="modal-button cancel">NO</button>
+        </div>
+    </div>
+
+    <div id="remove-task-modal" class="modal">
+        <div class="modal-content">
+            <h3>Are you sure you want to delete ** TASK NAME HERE **?</h3>
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-button confirm">YES</button>
+            <button class="modal-button cancel">NO</button>
+        </div>
+    </div>
+
+    <div id="completed-task-modal" class="modal">
+        <div class="modal-content">
+            <h3>Congratulations on completing ** TASK NAME HERE **!!</h3>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

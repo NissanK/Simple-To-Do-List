@@ -1,0 +1,264 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Fredoka', sans-serif;
+    color: #424874;
+}
+
+body{
+    background-color: #F4EEFF;
+}
+
+.btn{
+    border-radius: 5px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    height: 3rem;
+    margin-bottom: 5px;
+    width: 9rem;
+    border: 2px solid #424874;
+    background-color: #A6B1E1;
+    transition: all 0.3s;
+}
+
+.btn:hover{
+    background-color: #95a2dd;
+    font-size: 1.1rem;
+    cursor: pointer;
+    height: 3.2rem;
+    width: 10rem;
+}
+
+h1{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2.5rem;
+}
+
+/* header section */
+
+.main-header{
+    background-color: #DCD6F7;
+    display: flex;
+    border-radius: 10px;
+    margin-left:1rem;
+    height: 100px;
+    align-items: center;
+    margin: 0.25rem 0.5rem;
+    padding: 0px 5%;
+}
+
+.main-header div{
+    margin-left:auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.main-header #add-task{
+    margin-right: 2rem;
+}
+
+.main-header #delete-all{
+    background-color: rgb(241, 120, 120);
+}
+
+#delete-all:hover{
+    background-color: rgb(243, 67, 67);
+}
+
+/* element section */
+#elements{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    height: 100%;
+}
+
+.element{
+    display: none;
+    background-color: #b7c2f7;
+    height: 80px;
+    margin: 1% 2%;
+    width: 45%;
+    border-radius: 7px;
+    justify-content: space-between;
+}
+
+.element-heading{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex: 3;
+}
+.element-date{
+    text-align: end;
+    flex: 1;
+}
+.element-desc{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.element.visible{
+    display: inline-flex;
+}
+
+.element:hover{
+    background-color: #A6B1E1;
+}
+
+.element-body{
+    padding: 5px 10px;
+    display: flex;
+    width: 60%;
+    flex: 1;
+    flex-direction: column;
+}
+
+.element-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.element-buttons{
+    display: flex;
+}
+
+.element-btn{
+    width: 5rem;
+    border: none;
+}
+
+.element-btn i{
+    font-size: 2.5rem;
+}
+
+.check{
+    background-color: lightgreen;
+}
+
+.check:hover{
+    background-color: lime;
+    font-size: 2.7rem;
+    cursor: pointer;
+}
+
+.uncheck{
+    border-radius: 0px 7px 7px 0px;
+    background-color: rgb(241, 120, 120);
+}
+
+.uncheck:hover{
+    cursor: pointer;
+    font-size: 2.7rem;
+    background-color: rgb(243, 67, 67);
+}
+
+/* backdrop */
+
+#backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+    pointer-events: none;
+    display: none;
+}
+
+#backdrop.visible {
+    display: block;
+    pointer-events: all;
+}
+
+/* modals */
+
+.modal{
+    position: fixed;
+    background-color:#DCD6F7;
+    width: 45%;
+    border-radius: 10px;
+    padding: 1rem;
+    top: 25vh;
+    left:27.5%;
+    z-index: 2;
+    display: none;
+}
+
+.modal.visible{
+    display: block;
+}
+
+.modal-content{
+    display: flex;
+    font-weight: bold;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.modal-content label{
+    margin: 0.5rem;
+}
+.modal-content input{
+    margin:0 0.5rem;
+}
+.modal-buttons{
+    margin: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-button{
+    border-radius: 5px;
+    font-family: 'Josefin Sans', sans-serif;
+    height: 50px;
+    font-weight: bold;
+    width: 48%;
+    border: 2px solid #424874;
+}
+
+.confirm{
+    background-color: lightgreen;
+
+}
+
+.cancel{
+    background-color: rgb(241, 120, 120);
+}
+
+.confirm:hover{
+    background-color: lime;
+    cursor: pointer;
+}
+
+.cancel:hover{
+    cursor: pointer;
+    background-color: rgb(243, 67, 67);
+}
+
+#completed-task-modal h3{
+    text-align: center;
+}
+
+@media screen and (max-width : 850px) {
+    #elements{
+        flex-wrap: wrap;
+    }
+    .element{
+        width: 90%;
+    }
+    .main-header{
+        justify-content:space-around;
+    }
+}
+
+@media screen and (max-width : 650px) {
+    .main-header #add-task{
+        margin-right: 0;
+    }
+}
