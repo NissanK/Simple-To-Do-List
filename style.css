@@ -89,12 +89,9 @@ h1{
 .element-heading{
     text-overflow: ellipsis;
     overflow: hidden;
-    flex: 3;
-}
-.element-date{
-    text-align: end;
     flex: 1;
 }
+
 .element-desc{
     text-overflow: ellipsis;
     overflow: hidden;
