@@ -53,19 +53,19 @@
 
     <div id="add-modal" class="modal">
         <div class="modal-content">
-            <label for="task-name">Task Name</label>
-            <input type="text" id="task-name">
-            <label for="task-deadline">Task Deadline</label>
-            <input type="date" name="" id="task-deadline">
-            <label for="task-description">Task Description</label>
-            <input type="text" id="task-desc">
+            <label  for="task-name">Task Name</label>
+            <input class="modal-content-elemts" type="text" id="task-name">
+            <label  for="task-deadline">Task Deadline</label>
+            <input class="modal-content-elemts" type="date" name="" id="task-deadline">
+            <label  for="task-description">Task Description</label>
+            <textarea class="modal-content-elemts" name="task-desc" id="task-desc" cols="1" rows="10"></textarea>
         </div>
         <div class="modal-buttons">
             <button class="modal-button confirm">ADD TASK</button>
             <button class="modal-button cancel">CANCEL</button>
         </div>
     </div>
-
+    
     <div id="delete-all-modal" class="modal">
         <div class="modal-content">
             <h3>Are You Sure You Want To Delete All Your Tasks?</h3>
@@ -86,12 +86,41 @@
         </div>
     </div>
 
-    <div id="completed-task-modal" class="modal">
+    <div id="normal-text-modal" class="modal">
         <div class="modal-content">
             <h3>Congratulations on completing ** TASK NAME HERE **!!</h3>
         </div>
     </div>
+    
+    <div id="task-info-modal" class="modal">
+        <div class="modal-content" id="modal-bottom">
+            <label  for="task-name">Task Name</label>
+            <p>Name of the Task</p>
+            <label  for="task-deadline">Task Deadline</label>
+            <p>Deadline of The Task</p>
+            <label for="task-description">Task Description</label>
+            <p id="task-info-desc">Description of the Task Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis explicabo reiciendis minima atque, architecto nesciunt sapiente dolorem odit beatae quas ipsa molestias temporibus asperiores nostrum magnam amet, in tempore aperiam.</p>
+        </div>
+        <div class="modal-buttons">
+            <button class="edit"><i class="fa-solid fa-arrows-rotate"></i></button>
+        </div>
+    </div>
 
+    <div id="edit-task-modal" class="modal">
+        <div class="modal-content">
+            <label  for="task-name">Task Name</label>
+            <input class="modal-content-elemts" type="text" id="task-name">
+            <label  for="task-deadline">Task Deadline</label>
+            <input class="modal-content-elemts" type="date" name="" id="task-deadline">
+            <label  for="task-description">Task Description</label>
+            <textarea class="modal-content-elemts" name="task-desc" id="edit-task-desc" cols="1" rows="10"></textarea>
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-button confirm">CONFIRM</button>
+            <button class="modal-button cancel">CANCEL</button>
+        </div>
+    </div>
+    
     <!-- JS -->
     <script src="script.js"></script>
 

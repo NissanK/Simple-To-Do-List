@@ -90,6 +90,7 @@ h1{
     text-overflow: ellipsis;
     overflow: hidden;
     flex: 1;
+    font-size: 1.17rem;
 }
 
 .element-desc{
@@ -180,10 +181,12 @@ h1{
     width: 45%;
     border-radius: 10px;
     padding: 1rem;
-    top: 25vh;
-    left:27.5%;
     z-index: 2;
     display: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #424874;
 }
 
 .modal.visible{
@@ -200,9 +203,20 @@ h1{
 .modal-content label{
     margin: 0.5rem;
 }
-.modal-content input{
-    margin:0 0.5rem;
+
+.modal-content-elemts{
+    border: 1px solid #424874;
 }
+
+.modal-content-elemts:hover{
+    background-color: #F4EEFF;
+}
+
+textarea{
+    resize: none;
+    width: 100%;
+}
+
 .modal-buttons{
     margin: 0.5rem;
     display: flex;
@@ -240,6 +254,45 @@ h1{
 
 #completed-task-modal h3{
     text-align: center;
+}
+
+/* task information Modal  */
+#task-info-modal .modal-content{
+    margin-bottom: 0;
+}
+#task-info-modal p{
+    margin: 0 0.5rem;
+    background-color:#F4EEFF;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+#task-info-modal .edit{
+    position:absolute;
+    left: 97%;
+    top: 94%;
+    border-radius:8px;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgb(240, 231, 231);
+    border: 2px solid #424874;
+    transition: all 0.3s;
+}
+#task-info-modal #task-info-desc{
+    font-weight: 100;
+}
+
+.edit i{
+    font-size: 1.5rem;
+}
+
+#task-info-modal .edit:hover{
+    left: 96%;
+    top: 93%;
+    width: 2.7rem;
+    height: 2.7rem;
+    cursor:pointer;
+    background-color:rgb(202, 199, 199) ;
 }
 
 @media screen and (max-width : 850px) {

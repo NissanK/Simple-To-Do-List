@@ -5,7 +5,9 @@ const backdrop = document.getElementById('backdrop');
 const addTaskModal = document.getElementById('add-modal');
 const deleteAllModal = addTaskModal.nextElementSibling;
 const removeTaskModal = deleteAllModal.nextElementSibling;
-const completedTaskModal = removeTaskModal.nextElementSibling;
+const TextModal = removeTaskModal.nextElementSibling;
+const taskInfoModel = TextModal.nextElementSibling;
+const editTaskModal = taskInfoModel.nextElementSibling;
 
 const buttonsAddModal = addTaskModal.getElementsByTagName('button');
 const confirmTaskAddBtn = buttonsAddModal[0];
@@ -22,17 +24,22 @@ const cancelRemoveBtn = buttonsRemoveTaskModal[1];
 const tasksSection = document.getElementById('elements');
 
 const userInputs = addTaskModal.firstElementChild.getElementsByTagName('input');
+const userTextArea = document.getElementById('task-desc');
+
+const editInputs = editTaskModal.getElementsByTagName('input');
+const editTextArea = document.getElementById('edit-task-desc');
 
 let tasks = [];
 retreiveTasks();
 
 function retreiveTasks(){
+    const elementSection = document.getElementById('elements');
+    elementSection.innerHTML = ``;
     tasks = JSON.parse(localStorage.getItem("tasks"));
     if(!tasks){
         tasks = [];
     }
     else{
-        console.log(tasks);
         for(const task of tasks){
             updateTasksUI(task.name,task.deadline,task.description);
         }
@@ -82,22 +89,22 @@ function cancelRemoveTask(){
     }
 }
 
-function hideCompletedModal(){
-    if(completedTaskModal.classList.contains('visible')){
-        completedTaskModal.classList.remove('visible');
+function hideTextModal(){
+    if(TextModal.classList.contains('visible')){
+        TextModal.classList.remove('visible');
         backdropToggler();
     }
 }
 
 function completeCurrentTask(currTask,taskName){
-    completedTaskModal.firstElementChild.firstElementChild.innerHTML = `Congratulations on completing ${taskName}!!`;
+    TextModal.firstElementChild.firstElementChild.innerHTML = `Congratulations on completing ${taskName}!!`;
     backdropToggler();
-    completedTaskModal.classList.add('visible');
+    TextModal.classList.add('visible');
 
     deleteCurrentTask(currTask,taskName);
 
     setTimeout(() => {
-        hideCompletedModal();
+        hideTextModal();
     }, 5000);
 }
 
@@ -125,40 +132,185 @@ function updateTasksUI(taskName,taskDeadline,taskDescription){
     const newTaskButtons = newTask.querySelectorAll('button');
     const completeTaskBtn= newTaskButtons[0];
     const deleteTaskBtn = newTaskButtons[1];
+    let taskInfoBtn = newTask.firstElementChild;
 
+    taskInfoBtn.replaceWith(taskInfoBtn.cloneNode(true));
+    taskInfoBtn = newTask.firstElementChild;
+    
     completeTaskBtn.addEventListener('click',completeCurrentTask.bind(null,newTask,taskName));
     deleteTaskBtn.addEventListener('click',removeTaskModalHandler.bind(null,newTask,taskName));
+    taskInfoBtn.addEventListener('dblclick',displayInfo.bind(null,newTask,taskName,taskDeadline,taskDescription));
 }
 
 function DeadlineChanger(deadline){
-    const year = deadline.slice(2,4);
+    let year = deadline.slice(0,4);
     const month = deadline.slice(5,7);
     const date = deadline.slice(8);
+    const today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = String(today.getFullYear());
+    if(yyyy>year){
+        return undefined;
+    }else if(yyyy==year){
+        if(mm>month){
+            return undefined;
+        }
+        else if(month==mm){
+            if(dd>date){
+                return undefined;
+            }
+        }
+    }
+    year = year.slice(0,4);
     return `${date}-${month}-${year}`;
+}
+
+function displayInfo(taskUI,name,deadline,description){
+    taskInfoModel.classList.add('visible');
+    const taskList = taskInfoModel.firstElementChild.children;
+    const nameDisplay = taskList[1];
+    const deadlineDisplay = taskList[3];
+    const descriptionDisplay = taskList[5];
+    if(!description.length) descriptionDisplay.innerHTML = `NULL`;
+    else descriptionDisplay.innerHTML = `${description}`;
+    nameDisplay.innerHTML = `${name}`;
+    deadlineDisplay.innerHTML = `${deadline}`;
+    backdropToggler();
+
+    let editTaskBtn = taskInfoModel.firstElementChild.nextElementSibling.firstElementChild;
+
+    editTaskBtn.replaceWith(editTaskBtn.cloneNode(true));
+    editTaskBtn = taskInfoModel.firstElementChild.nextElementSibling.firstElementChild;
+
+    let x = editTask.bind(null,taskUI,name);
+    editTaskBtn.addEventListener('click',x);
+}
+
+function convertDeadline(deadline){
+    // converts deadline to a proper date format
+    let year = deadline.slice(6);
+    const month = deadline.slice(3,5);
+    const day = deadline.slice(0,2);
+    return `${year}-${month}-${day}`;
+}
+
+function editTask(taskUI,taskName){
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+    hideTaskInfo();
+    let idx = 0;
+
+    for(let i = 0;i<tasks.length;i++){
+        if(tasks[i].name === taskName){            
+            idx = i;
+        }
+    }
+    const task = tasks[idx];
+
+    editTaskModal.classList.add('visible');
+    backdropToggler();
+    let taskDeadline = task.deadline;
+    taskDeadline = convertDeadline(taskDeadline);
+
+    editInputs[0].value = task.name;
+    editInputs[1].value = taskDeadline;
+    editTextArea.value = task.description;
+
+    editBtns = editTaskModal.getElementsByTagName('button');
+    let editConfirmButton = editBtns[0];
+    const editCancelButton = editBtns[1];
+
+    editConfirmButton.replaceWith(editConfirmButton.cloneNode(true));
+    editBtns = editTaskModal.getElementsByTagName('button');
+    editConfirmButton = editBtns[0];
+
+    editConfirmButton.addEventListener('click',editConfirmHandler.bind(null,taskUI,idx));
+    editCancelButton.addEventListener('click',CancelEditHandler);
+}
+
+function editConfirmHandler(taskUI,idx){
+
+    let deadline = editInputs[1].value;
+    const name = editInputs[0].value;
+    const desc = editTextArea.value;
+
+    if(DeadlineChanger(deadline) == undefined){
+        editInputs[1].value = convertDeadline(tasks[idx].deadline);
+        alert('Please Enter a Valid Date!');
+        return;
+    }
+    
+    if(!confirmTaskConditions(name,deadline,desc)){
+        editInputs[0].value = tasks[idx].name;
+        return;
+    }
+    const taskDate = DeadlineChanger(editInputs[1].value)
+    const task = {
+        name : editInputs[0].value,
+        deadline : taskDate,
+        description : editTextArea.value
+    };
+
+    let nameUI = taskUI.firstElementChild.firstElementChild.firstElementChild;
+    let dateUI = nameUI.nextElementSibling;
+    let descUI = taskUI.firstElementChild.firstElementChild.nextElementSibling;
+    
+    nameUI.innerHTML = `<h3 class="element-heading">${task.name}</h3>`
+    dateUI.innerHTML = `<h4 class="element-date">${taskDate}</h4>`
+    descUI.innerHTML = `<div class="element-desc">
+                            ${task.description}
+                        </div>`;
+    tasks[idx] = task;
+    localStorage.setItem("tasks",JSON.stringify(tasks));
+
+    retreiveTasks();
+    CancelEditHandler();
+}
+
+function confirmTaskConditions(taskName,taskDeadline,taskDescription){
+
+    if(taskName.trim() === '' && taskDeadline === ''){
+        alert('Please fill out the Name and Deadline Fields!');
+        return false;
+    }
+
+    else if(taskName.trim()===''){
+        alert('Please fill out the Name Field!');
+        return false;
+    }
+
+    else if(taskDeadline ===''){
+        alert('Please fill out the Deadline Field!');
+        return false;
+    }
+
+    if(taskDescription.length > 600){
+        alert('Please Enter the Description in less than 600 characters!');
+        return false;
+    }
+
+    if(taskName.length > 30){
+        alert('Please Enter the Name in less than 30 characters!');
+        return false;
+    }
+
+    return true;
 }
 
 function confirmTask(){
     const taskName = userInputs[0].value;
     let taskDeadline = userInputs[1].value;
-    const taskDescription = userInputs[2].value;
-
-    // if(taskName.length() > )
-
-    if(taskName.trim() === '' && taskDeadline === ''){
-        alert('Please fill out the Name and Deadline Fields!');
-        return;
-    }
-
-    else if(taskName.trim()===''){
-        alert('Please fill out the Name Field!');
-        return;
-    }
-
-    else if(taskDeadline ===''){
-        alert('Please fill out the Deadline Field!');
-        return;
-    }
+    const taskDescription = userTextArea.value;
     taskDeadline = DeadlineChanger(taskDeadline);
+    if(taskDeadline == undefined){
+        alert('Please Enter a Valid Date!');
+        return;
+    }
+
+    if(!confirmTaskConditions(taskName,taskDeadline,taskDescription)){
+        return;
+    }
+
     let task = {
         name : taskName,
         deadline : taskDeadline,
@@ -169,6 +321,7 @@ function confirmTask(){
     if(!tasks){
         tasks = [];
     }
+
     tasks.push(task);
     localStorage.setItem("tasks",JSON.stringify(tasks));
 
@@ -183,14 +336,17 @@ function clearTaskHandler(){
         for(let element of userInputs){
             element.value = "";
         }
+        userTextArea.value = "";
     }
 }
 
 function backdropBackgroundHandler(){
+    CancelEditHandler();
     clearTaskHandler();
     cancelDeleteAll();
     cancelRemoveTask();
-    hideCompletedModal();
+    hideTextModal();
+    hideTaskInfo();
 }
 
 // delete All tasks button script
@@ -207,16 +363,36 @@ function cancelDeleteAll(){
     }
 }
 
-function deleteAllTasks(){
+function CancelEditHandler(){
+    if(editTaskModal.classList.contains('visible')){
+        editTaskModal.classList.remove('visible');
+        backdropToggler();
+    }
+}
 
+function hideTaskInfo(){
+    if(taskInfoModel.classList.contains('visible')){
+        taskInfoModel.classList.remove('visible');
+        backdropToggler();
+    }
+}
+
+function deleteAllTasks(){
     tasks = JSON.parse(localStorage.getItem("tasks"));
+    if(!tasks.length){
+        backdropToggler();
+        TextModal.firstElementChild.firstElementChild.innerHTML = `No Tasks Found To Delete!`;
+        TextModal.classList.add('visible');
+        cancelDeleteAll();
+        return;
+    }
+
     tasks = [];
     localStorage.setItem("tasks",JSON.stringify(tasks));
 
     tasksSection.textContent = '';
     cancelDeleteAll();
 }
-
 
 addTaskBtn.addEventListener('click',addTaskHandler);
 backdrop.addEventListener('click',backdropBackgroundHandler);
