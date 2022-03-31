@@ -5,8 +5,8 @@ const backdrop = document.getElementById('backdrop');
 const addTaskModal = document.getElementById('add-modal');
 const deleteAllModal = addTaskModal.nextElementSibling;
 const removeTaskModal = deleteAllModal.nextElementSibling;
-const TextModal = removeTaskModal.nextElementSibling;
-const taskInfoModel = TextModal.nextElementSibling;
+const textModal = removeTaskModal.nextElementSibling;
+const taskInfoModel = textModal.nextElementSibling;
 const editTaskModal = taskInfoModel.nextElementSibling;
 
 const buttonsAddModal = addTaskModal.getElementsByTagName('button');
@@ -90,16 +90,16 @@ function cancelRemoveTask(){
 }
 
 function hideTextModal(){
-    if(TextModal.classList.contains('visible')){
-        TextModal.classList.remove('visible');
+    if(textModal.classList.contains('visible')){
+        textModal.classList.remove('visible');
         backdropToggler();
     }
 }
 
 function completeCurrentTask(currTask,taskName){
-    TextModal.firstElementChild.firstElementChild.innerHTML = `Congratulations on completing ${taskName}!!`;
+    textModal.firstElementChild.firstElementChild.innerHTML = `Congratulations on completing ${taskName}!!`;
     backdropToggler();
-    TextModal.classList.add('visible');
+    textModal.classList.add('visible');
 
     deleteCurrentTask(currTask,taskName);
 
@@ -142,7 +142,7 @@ function updateTasksUI(taskName,taskDeadline,taskDescription){
     taskInfoBtn.addEventListener('dblclick',displayInfo.bind(null,newTask,taskName,taskDeadline,taskDescription));
 }
 
-function DeadlineChanger(deadline){
+function deadlineChanger(deadline){
     let year = deadline.slice(0,4);
     const month = deadline.slice(5,7);
     const date = deadline.slice(8);
@@ -225,7 +225,7 @@ function editTask(taskUI,taskName){
     editConfirmButton = editBtns[0];
 
     editConfirmButton.addEventListener('click',editConfirmHandler.bind(null,taskUI,idx));
-    editCancelButton.addEventListener('click',CancelEditHandler);
+    editCancelButton.addEventListener('click',cancelEditHandler);
 }
 
 function editConfirmHandler(taskUI,idx){
@@ -234,7 +234,7 @@ function editConfirmHandler(taskUI,idx){
     const name = editInputs[0].value;
     const desc = editTextArea.value;
 
-    if(DeadlineChanger(deadline) == undefined){
+    if(deadlineChanger(deadline) == undefined){
         editInputs[1].value = convertDeadline(tasks[idx].deadline);
         alert('Please Enter a Valid Date!');
         return;
@@ -244,7 +244,7 @@ function editConfirmHandler(taskUI,idx){
         editInputs[0].value = tasks[idx].name;
         return;
     }
-    const taskDate = DeadlineChanger(editInputs[1].value)
+    const taskDate = deadlineChanger(editInputs[1].value)
     const task = {
         name : editInputs[0].value,
         deadline : taskDate,
@@ -264,7 +264,7 @@ function editConfirmHandler(taskUI,idx){
     localStorage.setItem("tasks",JSON.stringify(tasks));
 
     retreiveTasks();
-    CancelEditHandler();
+    cancelEditHandler();
 }
 
 function confirmTaskConditions(taskName,taskDeadline,taskDescription){
@@ -301,7 +301,7 @@ function confirmTask(){
     const taskName = userInputs[0].value;
     let taskDeadline = userInputs[1].value;
     const taskDescription = userTextArea.value;
-    taskDeadline = DeadlineChanger(taskDeadline);
+    taskDeadline = deadlineChanger(taskDeadline);
     if(taskDeadline == undefined){
         alert('Please Enter a Valid Date!');
         return;
@@ -341,7 +341,7 @@ function clearTaskHandler(){
 }
 
 function backdropBackgroundHandler(){
-    CancelEditHandler();
+    cancelEditHandler();
     clearTaskHandler();
     cancelDeleteAll();
     cancelRemoveTask();
@@ -363,7 +363,7 @@ function cancelDeleteAll(){
     }
 }
 
-function CancelEditHandler(){
+function cancelEditHandler(){
     if(editTaskModal.classList.contains('visible')){
         editTaskModal.classList.remove('visible');
         backdropToggler();
@@ -381,8 +381,8 @@ function deleteAllTasks(){
     tasks = JSON.parse(localStorage.getItem("tasks"));
     if(!tasks.length){
         backdropToggler();
-        TextModal.firstElementChild.firstElementChild.innerHTML = `No Tasks Found To Delete!`;
-        TextModal.classList.add('visible');
+        textModal.firstElementChild.firstElementChild.innerHTML = `No Tasks Found To Delete!`;
+        textModal.classList.add('visible');
         cancelDeleteAll();
         return;
     }
