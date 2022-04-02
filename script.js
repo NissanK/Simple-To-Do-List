@@ -29,6 +29,7 @@ const userTextArea = document.getElementById('task-desc');
 const editInputs = editTaskModal.getElementsByTagName('input');
 const editTextArea = document.getElementById('edit-task-desc');
 
+const infoBtn = document.querySelector('.info-btn');
 let tasks = [];
 retreiveTasks();
 
@@ -97,7 +98,7 @@ function hideTextModal(){
 }
 
 function completeCurrentTask(currTask,taskName){
-    textModal.firstElementChild.firstElementChild.innerHTML = `Congratulations on completing ${taskName}!!`;
+    textModal.firstElementChild.innerHTML = `<h3>Congratulations on completing ${taskName}!!</h3>`;
     backdropToggler();
     textModal.classList.add('visible');
 
@@ -381,7 +382,7 @@ function deleteAllTasks(){
     tasks = JSON.parse(localStorage.getItem("tasks"));
     if(!tasks.length){
         backdropToggler();
-        textModal.firstElementChild.firstElementChild.innerHTML = `No Tasks Found To Delete!`;
+        textModal.firstElementChild.innerHTML = `<h3>No Tasks Found To Delete!</h3>`;
         textModal.classList.add('visible');
         cancelDeleteAll();
         return;
@@ -394,6 +395,21 @@ function deleteAllTasks(){
     cancelDeleteAll();
 }
 
+function infoDisplayer(){
+    textModal.firstElementChild.innerHTML = `
+    <h3> 1. Click the Add Task Button to Add a task.</h3>
+    <br>
+    <h3> 2. Click the Delete All Button to Delete All the tasks.</h3>
+    <br>
+    <h3> 3. Double Clicking a task allows you to view the task in a larger view and Edit the task.</h3>
+    <br>
+    <h3> 4. Every task can be Completed or Deleted.</h3>
+    <h6 class="text-align-right"> Made By Nissan Kumar</h6>
+    `;
+    backdropToggler();
+    textModal.classList.add('visible');
+}
+
 addTaskBtn.addEventListener('click',addTaskHandler);
 backdrop.addEventListener('click',backdropBackgroundHandler);
 cancelAddBtn.addEventListener('click',clearTaskHandler);
@@ -402,3 +418,5 @@ confirmTaskAddBtn.addEventListener('click',confirmTask);
 deleteAllBtn.addEventListener('click',deleteAllHandler);
 cancelDeleteAllBtn.addEventListener('click',cancelDeleteAll);
 confirmDeleteAllBtn.addEventListener('click',deleteAllTasks);
+
+infoBtn.addEventListener('click',infoDisplayer);

@@ -6,6 +6,32 @@
     color: #424874;
 }
 
+.info-btn{
+    width: 25px;
+    height: 25px;
+    position: fixed;
+    background-color:#d0c7f7;
+    border-radius: 50%;
+    border: 2px solid #424874;
+    transition: all 0.3s;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    font-size: 0.7rem;
+    margin-right: 15px;
+    font-weight: 900;
+}
+
+.info-btn:hover{
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.text-align-right{
+    text-align: right;
+}
+
 body{
     background-color: #F4EEFF;
 }
@@ -319,6 +345,7 @@ textarea{
     }
 }
 
+/* Mobile UI */
 @media screen and (max-width : 650px) {
     .main-header #add-task{
         margin-right: 0;
