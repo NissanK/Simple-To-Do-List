@@ -90,6 +90,7 @@ h1{
     text-overflow: ellipsis;
     overflow: hidden;
     flex: 1;
+    height:1.5rem;
     font-size: 1.17rem;
 }
 
@@ -112,6 +113,8 @@ h1{
     width: 60%;
     flex: 1;
     flex-direction: column;
+    overflow: hidden;
+    text-overflow: clip;
 }
 
 .element-head{
@@ -295,6 +298,12 @@ textarea{
     background-color:rgb(202, 199, 199) ;
 }
 
+@media screen and (max-width : 1200px){
+    .modal{
+        width: 60%;
+    }
+}
+
 @media screen and (max-width : 850px) {
     #elements{
         flex-wrap: wrap;
@@ -305,10 +314,57 @@ textarea{
     .main-header{
         justify-content:space-around;
     }
+    .modal{
+        width: 70%;
+    }
 }
 
 @media screen and (max-width : 650px) {
     .main-header #add-task{
         margin-right: 0;
+    }
+    .btn{
+        font-weight: bold;
+        height: 2.5rem;
+        width: 6rem;
+        font-size: 0.75rem;
+    }
+    .btn:hover{
+        font-size: 0.9rem;
+        height: 2.65rem;
+        width: 7rem;
+    }
+
+    .element-btn{
+        width: 2.5rem;
+        height: 50%;
+    }
+    .element-btn i{
+        font-size: 1.5rem;
+    }
+    .element-buttons{
+        flex-direction: column;
+    }
+    .uncheck{
+        border-radius: 0px 0px 7px 0px;
+    }
+    .check{
+        border-radius: 0px 7px 0px 0px;
+    }
+    .element-btn:hover{
+        font-size: 1.7rem;
+    }
+    .modal{
+        position: fixed;
+        background-color:#DCD6F7;
+        width: 80%;
+        border-radius: 10px;
+        padding: 1rem;
+        z-index: 2;
+        display: none;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #424874;
     }
 }
