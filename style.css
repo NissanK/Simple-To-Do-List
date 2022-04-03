@@ -236,6 +236,8 @@ h1{
 
 .modal-content-elemts{
     border: 1px solid #424874;
+    padding: 0.4rem;
+    outline: none;
 }
 
 .modal-content-elemts:hover{
